@@ -84,36 +84,6 @@ $reportes_devueltos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>
     
     <br>
-    <h3>Reportes anteriores</h3>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Fecha</th>
-            <th>Status</th>
-            <th>Ver detalle</th>
-        </tr>
-        <?php foreach($reportes as $reporte): ?>
-        <tr>
-            <td><?php echo $reporte['id']; ?></td>
-            <td><?php echo $reporte['fecha']; ?></td>
-            <td><?php echo $reporte['status']; ?></td>
-            <td><button onclick="verDetalle(<?php echo $reporte['id']; ?>)">Ver detalle</button></td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <!-- Modal para ver detalles del reporte -->
-    <div id="detalleModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="cerrarModal()">&times;</span>
-            <h3>Detalles del Reporte</h3>
-            <div id="detalleContenido">
-                <!-- Aquí se cargará el contenido de los detalles -->
-            </div>
-        </div>
-    </div>
-
-    <br>
     <h3>Reportes devueltos para corrección</h3>
     <table>
         <tr>
@@ -134,24 +104,10 @@ $reportes_devueltos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </table>
 
-    <br>
+    <!-- Agregar botón para redirigir al historial de reportes -->
+    <button onclick="window.location.href='historial_reportes.php'">Ver historial de reportes</button>
+    <br><br><br>
     <h3>Gestionar registro biométrico</h3>
     <a href="biometrico.php">Ver y registrar historial biométrico</a>
-
-    <script>
-        function verDetalle(reporte_id) {
-            // Realizar una solicitud AJAX para obtener los detalles del reporte
-            fetch('detalle_reporte.php?reporte_id=' + reporte_id)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('detalleContenido').innerHTML = data;
-                    document.getElementById('detalleModal').style.display = 'flex';
-                });
-        }
-
-        function cerrarModal() {
-            document.getElementById('detalleModal').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
