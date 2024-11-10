@@ -14,7 +14,6 @@
         $stmt = $pdo->prepare("UPDATE reportes SET status = :status WHERE id = :reporte_id");
         $stmt->execute(['status' => $status, 'reporte_id' => $reporte_id]);
 
-        // Guardar aprobación o corrección
         $stmt = $pdo->prepare("
             INSERT INTO aprobaciones (reporte_id, aprobado_por, status, comentario)
             VALUES (:reporte_id, :aprobado_por, :status, :comentario)

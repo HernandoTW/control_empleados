@@ -10,17 +10,25 @@
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $password === $user['password']) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['rol'] = $user['rol'];
             $_SESSION['area_id'] = $user['area_id'];
-            header("Location: inicio.php");
+            $_SESSION['nombre'] = $user['nombre'];
+
+
+            if ($user['rol'] === 'lider') {
+                header("Location: inicio_lider.php");
+            } elseif ($user['rol'] === 'jefe_rh') {
+                header("Location: inicio_jefe_rh.php");
+            }
             exit;
         } else {
             $error = "Usuario o contraseña incorrectos.";
         }
     }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -33,9 +41,9 @@
     <?php if (isset($error)) echo "<p>$error</p>"; ?>
     <form method="POST">
         <input type="text" name="username" placeholder="Usuario" required>
-        <br>
+        <br><br>
         <input type="password" name="password" placeholder="Contraseña" required>
-        <br>
+        <br><br>
         <button type="submit">Ingresar</button>
     </form>
 </body>
