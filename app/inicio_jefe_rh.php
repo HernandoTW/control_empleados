@@ -7,7 +7,6 @@ if ($_SESSION['rol'] !== 'jefe_rh') {
     exit;
 }
 
-// Obtener reportes pendientes de aprobación
 $stmt = $pdo->prepare("
     SELECT r.id AS reporte_id, u.nombre AS lider_nombre, a.nombre AS area_nombre, r.fecha, r.status 
     FROM reportes r
@@ -18,7 +17,6 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $reportes_pendientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener historial de reportes
 $stmt = $pdo->prepare("
     SELECT r.id AS reporte_id, u.nombre AS lider_nombre, a.nombre AS area_nombre, r.fecha, r.status, r.observacion
     FROM reportes r

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'empleado_id' => $empleado_id
         ]);
     }
-    // Cambiamos el status para reenviar
+
     $stmt = $pdo->prepare("UPDATE reportes SET status = 'enviado' WHERE id = :reporte_id");
     $stmt->execute(['reporte_id' => $reporte_id]);
     header("Location: inicio_lider.php");

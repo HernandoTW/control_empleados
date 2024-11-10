@@ -9,7 +9,6 @@ if ($_SESSION['rol'] !== 'lider') {
 
 $lider_id = $_SESSION['user_id'];
 
-// Obtener reportes enviados por el líder
 $stmt = $pdo->prepare("SELECT * FROM reportes WHERE lider_id = :lider_id AND status = 'enviado'");
 $stmt->execute(['lider_id' => $lider_id]);
 $reportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +20,6 @@ $reportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Historial de Reportes - Líder de Área</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        /* Estilos para el modal */
         .modal {
             display: none;
             position: fixed;
@@ -71,20 +69,18 @@ $reportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <br><br>
     <a href="inicio_lider.php" class="boton">Volver a inicio</a>
 
-    <!-- Modal para ver detalles del reporte -->
     <div id="detalleModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
             <h3>Detalles del Reporte</h3>
             <div id="detalleContenido">
-                <!-- Aquí se cargará el contenido de los detalles -->
+
             </div>
         </div>
     </div>
 
     <script>
         function verDetalle(reporte_id) {
-            // Realizar una solicitud AJAX para obtener los detalles del reporte
             fetch('detalle_reporte.php?reporte_id=' + reporte_id)
                 .then(response => response.text())
                 .then(data => {

@@ -10,17 +10,14 @@ if ($_SESSION['rol'] !== 'lider') {
 $lider_id = $_SESSION['user_id'];
 $area_id = $_SESSION['area_id'];
 
-// Obtener empleados del área
 $stmt = $pdo->prepare("SELECT * FROM empleados WHERE area_id = :area_id");
 $stmt->execute(['area_id' => $area_id]);
 $empleados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener reportes enviados por el líder
 $stmt = $pdo->prepare("SELECT * FROM reportes WHERE lider_id = :lider_id AND status = 'enviado'");
 $stmt->execute(['lider_id' => $lider_id]);
 $reportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener reportes devueltos para corrección
 $stmt = $pdo->prepare("SELECT * FROM reportes WHERE lider_id = :lider_id AND status = 'corregir'");
 $stmt->execute(['lider_id' => $lider_id]);
 $reportes_devueltos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,7 +29,6 @@ $reportes_devueltos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Inicio - Líder de Área</title>
     <link rel="stylesheet" href="estilos.css">
     <style>
-        /* Estilos para el modal */
         .modal {
             display: none;
             position: fixed;
@@ -104,7 +100,6 @@ $reportes_devueltos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </table>
 
-    <!-- Agregar botón para redirigir al historial de reportes -->
     <button onclick="window.location.href='historial_reportes.php'">Ver historial de reportes</button>
     <br><br><br>
     <h3>Gestionar registro biométrico</h3>

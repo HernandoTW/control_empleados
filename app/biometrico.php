@@ -9,7 +9,6 @@ if ($_SESSION['rol'] !== 'lider') {
 
 $area_id = $_SESSION['area_id'];
 
-// Obtener los registros biométricos de los empleados del área del líder
 $stmt = $pdo->prepare("
     SELECT * FROM biometrico b
     JOIN empleados e ON b.empleado_id = e.id
@@ -18,7 +17,6 @@ $stmt = $pdo->prepare("
 $stmt->execute(['area_id' => $area_id]);
 $registros_biometricos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Guardar en el historial cuando se envía el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($registros_biometricos as $registro) {
         $stmt = $pdo->prepare("
@@ -35,12 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = "Registros guardados en el historial exitosamente.";
 }
 
-// Paginación
 $registros_por_pagina = 6;
 $pagina_actual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
-// Obtener los registros del historial paginados
 $stmt = $pdo->prepare("
     SELECT * FROM biometrico_historial bh
     JOIN empleados e ON bh.empleado_id = e.id
@@ -108,7 +104,6 @@ $total_paginas = ceil($total_registros / $registros_por_pagina);
         <?php endforeach; ?>
     </table>
 
-    <!-- Paginación -->
     <div class="paginacion">
         <?php if ($pagina_actual > 1): ?>
             <a href="biometrico.php?pagina=<?php echo $pagina_actual - 1; ?>">Anterior</a>
