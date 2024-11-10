@@ -33,7 +33,9 @@
     <?php if (isset($error)) echo "<p>$error</p>"; ?>
     <form method="POST">
         <input type="text" name="username" placeholder="Usuario" required>
+        <br>
         <input type="password" name="password" placeholder="Contraseña" required>
+        <br>
         <button type="submit">Ingresar</button>
     </form>
 </body>
